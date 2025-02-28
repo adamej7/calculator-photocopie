@@ -1,11 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color:rgb(213, 213, 214);
+            font-family: Arial, sans-serif;
+            min-height: 150vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calculator-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0,1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 { 
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333
+        }
+
+        .tarifs {
+            margin-bottom: 1.5rem;
+        }
+
+        .text-auted {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-left: 1rem;
+        }
+        li{
+            margin-bottom: 0.5rem;
+        }
+
+        label{
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        input{
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem
+        }
+        button{
+            width: 100%;
+            padding: 1rem;
+            background-color: #287bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+    </style>
     <title>Calculator Photocopie</title>
 </head>
 <body>
-    <h1>Calculator Photocopie - hello adam</h1>
+    <div class="calculator-container">
+    <h1>Calculateur de Photocopie</h1>
+    <div class="tarifs">
+        <p class="text-auted">Tarifs :</p>
+        <ul>
+            <li>0,25 DH pour les premières photocopie</li>
+            <li>0,20 DH pour les suivantes</li>
+            <li>0,10 DH au-delà</li>
+        </ul>
+    </div>
+
+    <form id="copyForm">
+        <div class="form-group">
+            <label for="copies">Nombre de photocopie :</label>
+            <input type="number" id="copies" min="1" required />
+        </div>
+        <button type="submit" >Calculer</button>
+    </form>
+
+    <div class="result-box" id="result" style="display: none">
+       <h5>Résultat :</h5>
+       <p>Montant total : <span id="totalAmount">0</span> DH</p>
+    </div>
+    
+    <script>
+        document.getElementById('copyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const copies = parseInt(document.getElementById('copies').value);
+            let total = 0;
+    
+            if (copies <= 10) {
+                total = copies * 0.25;
+            } else if (copies <= 30) {
+                total = (10 * 0.25) + ((copies - 10) * 0.20);
+            } else {
+                total = (10 * 0.25) + (20 * 0.20) + ((copies - 30) * 0.10);
+            }
+            
+            // Afficher le résultat
+            document.getElementById("result").style.display = "block";
+            document.getElementById("totalAmount").textContent = total.toFixed(2); // Formate pour afficher 2 décimales
+        });
+    </script>
+    
 </body>
 </html>
